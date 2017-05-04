@@ -1,0 +1,138 @@
+body {
+  line-height: 1.6; }
+
+.header {
+  font-family: serif;
+  text-align: center;
+  background-color: #cc6699;
+  color: #fff;
+  padding: 2em; }
+  .header .header-title {
+    font-size: 3rem; }
+
+.main {
+  padding: 2em;
+  text-align: center; }
+  .main .main-title {
+    margin: 1em auto;
+    font-size: 2rem; }
+  .main .main-text {
+    margin: 2em auto; }
+  .main .kanpaibutton {
+    padding: 0.5em 1em;
+    font-size: 1.5rem;
+    border: 3px solid #cc6699;
+    border-radius: 5px;
+    color: #cc6699;
+    text-decoration: none; }
+    .main .kanpaibutton:hover {
+      background-color: #cc6699;
+      color: #fff; }
+  .main p {
+    margin: 2em auto; }
+  .main .svg-icon {
+    fill: pink; }
+  .main .logo img {
+    max-width: 300px;
+    width: auto;
+    height: auto;
+    margin: 50px auto; }
+
+.ranking {
+  counter-reset: rank;
+  margin: 0 auto;
+  display: inline-block; }
+  .ranking .ranking-item {
+    counter-increment: rank;
+    margin: 15px 0;
+    font-size: 2rem;
+    text-align: left; }
+    .ranking .ranking-item:before {
+      content: counter(rank);
+      display: inline-block;
+      margin-right: 1em;
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      line-height: 50px;
+      background-color: #000;
+      color: #fff;
+      text-align: center; }
+    .ranking .ranking-item:nth-child(1):before {
+      background-color: #b39300; }
+    .ranking .ranking-item:nth-child(2):before {
+      background-color: #898989; }
+    .ranking .ranking-item:nth-child(3):before {
+      background-color: #9a5c16; }
+  .ranking .ranking-name {
+    margin-right: 0.5em; }
+
+.zaseki {
+  display: flex;
+  flex-direction: column;
+  background-image: url(../img/bg.jpg);
+  padding: 1em; }
+
+.maching {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  margin: 1em auto;
+  max-width: 1000px; }
+  .maching:before {
+    content: attr(data-mache) "%";
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-image: url(../img/heart.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    order: 2;
+    color: #fff;
+    font-size: 30px;
+    line-height: 100px;
+    text-align: center; }
+  .maching .maching-item {
+    box-sizing: border-box;
+    white-space: nowrap;
+    width: 400px;
+    font-size: 2rem;
+    padding: 1em; }
+    .maching .maching-item:first-child {
+      order: 1; }
+    .maching .maching-item:last-child {
+      order: 3; }
+  .maching .maching-name {
+    margin-bottom: 0.5em; }
+  .maching .maching-type {
+    display: block; }
+  .maching.maching--solo {
+    order: 99;
+    width: 50%;
+    max-width: 400px; }
+    .maching.maching--solo:before {
+      display: none; }
+    .maching.maching--solo .maching-item {
+      width: 100%; }
+
+.loading {
+  background-image: url(../img/loading.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin: 1em auto; }
+  .loading > .ranking, .loading .zaseki {
+    height: 300px;
+    opacity: 0;
+    transition: opacity 0.3s; }
+  .loading.loading--done {
+    padding: 0;
+    background: none; }
+    .loading.loading--done > .ranking, .loading.loading--done .zaseki {
+      height: auto;
+      opacity: 1; }
+
+/*# sourceMappingURL=style.css.map */

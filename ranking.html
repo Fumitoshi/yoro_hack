@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>LOVE-ジョッキ</title>
+    <link rel="stylesheet" href="asset/css/reset.css">
+    <link rel="stylesheet" href="asset/css/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="header-title">LOVE-ジョッキ</h1>
+        <p class="header-text">～大人の乾杯テクニック～</p>
+    </header>
+    <main class="main">
+        <h2 class="main-title">乾杯上手ランキング</h2>
+        <p class="main-text">乾杯のテクニック上位はこの人！</p>
+
+       <div class="loading">
+        <ol class="ranking">
+            <!--li class="ranking-item"><span class="ranking-name">Aさん</span><span class="ranking-type">〇〇タイプ</span></li-->
+        </ol>
+        </div>
+
+        <p><a class="kanpaibutton" href="maching.html">相性診断＆おすすめ座席</a></p>
+        <p><a class="kanpaibutton" href="index.html">もう一度乾杯！</a></p>
+
+    </main>
+</body>
+
+<script src="asset/js/jquery-3.2.1.min.js"></script>
+<script>
+    $(function() {
+        $.ajaxSetup({
+            dataType: 'json',
+            timeout: 30000,
+            headers: {
+                'pragma': 'no-cache',
+                'Cache-Control': 'no-cache',
+                'If-Modified-Since': 'Thu, 01 Jun 1970 00:00:00 GMT'
+            }
+        });
+
+        var idata = $.getJSON("asset/json/data.json");
+        var itype = $.getJSON("asset/json/type.json");
+
+        $.when(idata, itype)
+            .done(function(result1, result2) {
+                result1[0].sort(function(val1, val2) {
+                    return (val1.type < val2.type ? 1 : -1);
+                });
+                for (var i = 0; i < result1[0].length; i++) {
+                    var showName = result1[0][i].id;
+                    var typeNum = result1[0][i].type;
+                    var showType = "計り知れない";
+
+                    for (var j = 0; j < result2[0].length; j++) {
+                        if(result2[0][j].type === typeNum){
+                            showType = result2[0][j].typename;
+                        }
+                    }
+
+                    $('.ranking').append('<li class="ranking-item"><span class="ranking-name">' + showName + 'さん</span><span class="ranking-type">' + showType + 'タイプ</span></li>');
+                }
+            setTimeout(function(){
+                $('.loading').addClass('loading--done');
+            },1000);
+
+            }).fail(function(result1, result2) {
+                alert("fail");
+            });
+
+    });
+</script>
+
+</html>
