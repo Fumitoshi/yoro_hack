@@ -7,6 +7,7 @@ Created on Wed May  3 17:40:17 2017
 
 import bluetooth
 import json
+import requests
 
 gyro_th = 0.3
 acc_th = 0.2
@@ -149,11 +150,15 @@ pdata.append(8)
 
 json_data =[]
 name = ["A","B","C","D","E","F"]
+data = []
 for i in range(num):
-    json_data.append({
-            "id": name[i],
-            "type": pdata[i]
-            })
-f = open("D:/yoro_hack/asset/json/data.json","w")
-json.dump(json_data,f,sort_keys=True)
-f.close()
+    data.append({"name":name[i],
+                "type":pdata[i]})
+#     json_data.append({
+#             "id": name[i],
+#             "type": pdata[i]
+#             })
+# f = open("D:/yoro_hack/asset/json/data.json","w")
+# json.dump(json_data,f,sort_keys=True)
+# f.close()
+req_post = requests.post("http://localhots:3000/post_request",data = data)

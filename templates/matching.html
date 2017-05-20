@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>LOVE-ジョッキ</title>
-    <link rel="stylesheet" href="asset/css/reset.css">
-    <link rel="stylesheet" href="asset/css/style.css">
+    <link rel="stylesheet" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
@@ -28,12 +28,12 @@
             </div>
         </div>
 
-        <p><a class="kanpaibutton" href="ranking.html">乾杯上手ランキング</a></p>
-        <p><a class="kanpaibutton" href="index.html">もう一度乾杯！</a></p>
+        <p><a class="kanpaibutton" href="/ranking">乾杯上手ランキング</a></p>
+        <p><a class="kanpaibutton" href="/">もう一度乾杯！</a></p>
 
     </main>
 </body>
-<script src="asset/js/jquery-3.2.1.min.js"></script>
+<script src="static/js/jquery-3.2.1.min.js"></script>
 <script>
     $(function() {
         $.ajaxSetup({
@@ -46,12 +46,15 @@
             }
         });
 
-        var idata = $.getJSON("asset/json/data.json");
-        var itype = $.getJSON("asset/json/type.json");
+        var idata = $.getJSON("/make_json");
+        var itype = $.getJSON("static/json/type.json");
+
+
 
         $.when(idata, itype)
             .done(function(result1, result2) {
-                var count = parseInt(result1[0].length);
+              // console.log(result1[0].ResultSet.result)
+                var count = parseInt(result1[0].ResultSet.result.length);
                 var zasekiArray = [];
 
                 if (count % 2 != 0) {
@@ -59,8 +62,8 @@
 
                     //var solo = parseInt(count/2)+1;
                     var solo = Math.floor(Math.random() * count);
-                    var soloshowName = result1[0][solo].id;
-                    var solotypeNum = result1[0][solo].type;
+                    var soloshowName = result1[0].ResultSet.result[solo].name;
+                    var solotypeNum = result1[0].ResultSet.result[solo].type;
                     var soloshowType = "計り知れない";
 
                     for (var j = 0; j < result2[0].length; j++) {
@@ -71,21 +74,21 @@
 
                     $('.zaseki').append('<ul class="maching maching--solo"><li class="maching-item"><span class="maching-name">' + soloshowName + 'さん</span><span class="maching-type">' + soloshowType + 'タイプ</span></li></ul>');
 
-                    result1[0].splice(solo, 1);
+                    result1[0].ResultSet.result.splice(solo, 1);
                 }
 
                 /* とりあえずタイプの数値が離れている人同士でマッチング */
-                count = parseInt(result1[0].length);
-                result1[0].sort(function(val1, val2) {
+                count = parseInt(result1[0].ResultSet.result.length);
+                result1[0].ResultSet.result.sort(function(val1, val2) {
                     return (val1.type < val2.type ? 1 : -1);
                 });
                 for (var i = 0; i < count / 2; i++) {
-                    var showName = result1[0][i].id;
-                    var typeNum = result1[0][i].type;
+                    var showName = result1[0].ResultSet.result[i].name;
+                    var typeNum = result1[0].ResultSet.result[i].type;
                     var showType = "計り知れない";
                     var pairIndex = count - i - 1;
-                    var showName2 = result1[0][pairIndex].id;
-                    var typeNum2 = result1[0][pairIndex].type;
+                    var showName2 = result1[0].ResultSet.result[pairIndex].name;
+                    var typeNum2 = result1[0].ResultSet.result[pairIndex].type;
                     var showType2 = "計り知れない";
                     var compatibility = 100 - (typeNum * typeNum2) * 3;
 

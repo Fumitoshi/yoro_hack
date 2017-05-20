@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>LOVE-ジョッキ</title>
-    <link rel="stylesheet" href="asset/css/reset.css">
-    <link rel="stylesheet" href="asset/css/style.css">
+    <link rel="stylesheet" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
@@ -23,13 +23,13 @@
         </ol>
         </div>
 
-        <p><a class="kanpaibutton" href="maching.html">相性診断＆おすすめ座席</a></p>
-        <p><a class="kanpaibutton" href="index.html">もう一度乾杯！</a></p>
+        <p><a class="kanpaibutton" href="/matching">相性診断＆おすすめ座席</a></p>
+        <p><a class="kanpaibutton" href="/">もう一度乾杯！</a></p>
 
     </main>
 </body>
 
-<script src="asset/js/jquery-3.2.1.min.js"></script>
+<script src="static/js/jquery-3.2.1.min.js"></script>
 <script>
     $(function() {
         $.ajaxSetup({
@@ -42,17 +42,19 @@
             }
         });
 
-        var idata = $.getJSON("asset/json/data.json");
-        var itype = $.getJSON("asset/json/type.json");
+        var idata = $.getJSON("/make_json");
+        var itype = $.getJSON("static/json/type.json");
 
         $.when(idata, itype)
             .done(function(result1, result2) {
-                result1[0].sort(function(val1, val2) {
+              console.log(result1)
+              console.log(result2)
+                result1[0].ResultSet.result.sort(function(val1, val2) {
                     return (val1.type < val2.type ? 1 : -1);
                 });
-                for (var i = 0; i < result1[0].length; i++) {
-                    var showName = result1[0][i].id;
-                    var typeNum = result1[0][i].type;
+                for (var i = 0; i < result1[0].ResultSet.result.length; i++) {
+                    var showName = result1[0].ResultSet.result[i].name;
+                    var typeNum = result1[0].ResultSet.result[i].type;
                     var showType = "計り知れない";
 
                     for (var j = 0; j < result2[0].length; j++) {
